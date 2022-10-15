@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from tech_news.database import find_news, search_news
+from tech_news.database import search_news
 
 
 # Requisito 6
@@ -27,4 +27,7 @@ def search_by_tag(tag):
 
 # Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    news_by_category = search_news({"category": {
+        "$regex": category,
+        "$options": 'i'}})
+    return [(new["title"], new["url"]) for new in news_by_category]
