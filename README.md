@@ -1,6 +1,6 @@
 # Boas-vindas ao repositório do Tech News
 
-    Esse projeto tem como principal objetivo fazer consultas em notícias do [_blog da Trybe_](https://blog.betrybe.com) utilizando raspagem de dados.
+Esse projeto tem como principal objetivo fazer consultas em notícias do blog da Trybe (https://blog.betrybe.com) utilizando raspagem de dados.
 
 <summary><strong> Habilidades trabalhadas:</strong></summary><br />
 <ul>
