@@ -22,6 +22,8 @@ def scrape_novidades(html_content):
     selector = Selector(text=html_content)
     links = selector.css(".entry-title a::attr(href)").getall()
     return links
+# ".ui-search-result-image__element ::attr(data-src)"
+# scrape_novidades(fetch("https://lista.mercadolivre.com.br/cervejas#D[A:cervejas]"))
 
 
 # Requisito 3
