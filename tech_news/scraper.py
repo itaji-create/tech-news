@@ -22,8 +22,6 @@ def scrape_novidades(html_content):
     selector = Selector(text=html_content)
     links = selector.css(".entry-title a::attr(href)").getall()
     return links
-# ".ui-search-result-image__element ::attr(data-src)"
-# scrape_novidades(fetch("https://lista.mercadolivre.com.br/cervejas#D[A:cervejas]"))
 
 
 # Requisito 3
@@ -68,5 +66,43 @@ def get_tech_news(amount):
     create_news(noticias)
     return noticias
 
+# funções extras  
+def scrape_links(html_content):
+    selector = Selector(text=html_content)
+    links = selector.css(".ui-search-item__group a::attr(href)").getall()
+    return links
 
-get_tech_news(5)
+
+def scrape_product(html_content):
+    selector = Selector(text=html_content)
+    product = {
+        "name": selector.css(".ui-pdp-title::text").get(),
+        "price": selector.css(".andes-money-amount meta::attr(content)").get(),
+        "url_image": selector.css(".ui-pdp-gallery__figure img::attr(data-zoom)").get(),
+    }
+    return product
+
+
+def scrape_next_page(html_content):
+    selector = Selector(text=html_content)
+    next_page_url = selector.css(".ui-search-pagination a::attr(href)").get()
+    return next_page_url
+
+
+def get_products(amount):
+    html_content = fetch("https://lista.mercadolivre.com.br/cervejas#D[A:cervejas]")
+    links = scrape_links(html_content)
+    products = []
+    while len(links[:amount]) != amount:
+        next_link = scrape_next_page(html_content)
+        next_page = fetch(next_link)
+        links = links + scrape_links(next_page)
+        html_content = next_page
+
+    for link in links[:amount]:
+        request = fetch(link)
+        product = scrape_product(request)
+        print(product)
+        products.append(product)
+    return products
+    
